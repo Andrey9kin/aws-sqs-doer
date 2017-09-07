@@ -1,9 +1,9 @@
-FROM amazonlinux:2017.03
+FROM python:2.7.13-alpine3.6
 
-# Install jq, needed to parse the SQS messages
-RUN yum install -y jq
+RUN pip install boto3==1.4.7 watchtower==0.4.0
 
 ENV AWS_DEFAULT_REGION us-east-1
+ENV IN_QUEUE_NAME change-me
 
-COPY doer.sh /usr/local/bin/doer.sh
-CMD /usr/local/bin/doer.sh
+COPY doer.py /doer.py
+CMD python /doer.py
